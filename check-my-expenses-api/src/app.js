@@ -1,8 +1,11 @@
 import express from "express";
 import { query } from "./db/db.js";
+import authRouter from "./modules/auth/authRouter.js"
 
 export const app = express();
+
 app.use(express.json());
+app.use("/auth", authRouter);
 
 app.get("/health", async (req, res) => {
     try {
