@@ -1,0 +1,1 @@
+export const secret = "SUPER_SECRET_RANDOM_KEY";

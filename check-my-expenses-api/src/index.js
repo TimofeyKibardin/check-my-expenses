@@ -1,11 +1,12 @@
 import { app } from "./app.js";
-import { closePool, query } from "./db/db.js";
+import { connectMongo, closeMongo, pingMongo } from "./db/db.js";
 
 const PORT = Number(process.env.PORT || 5000);
 
 async function bootstrap() {
-    // ping
-    await query("select 1");
+    // connect and ping
+    await connectMongo();
+    await pingMongo();
 
     // server
     const server = app.listen(PORT, () => {
@@ -16,7 +17,7 @@ async function bootstrap() {
     const shutdown = async (signal) => {
         console.log(`\n${signal} received, shutting down...`);
         server.close(async () => {
-            await closePool();
+            await closeMongo();
             process.exit(0);
         })
     }
